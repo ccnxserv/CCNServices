@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="ccnServices" default="jar" basedir=".">
+	<dirname property="ccn-libs-basedir" file="${ant.file.ccnServices}" />
+	<property name="lib" location="${ccn-libs-basedir}/lib" />
+	<property name="build" location="build" />
+	<property name="jarfile" value="ccnServices.jar" />
+	<property name="ccnxjar" location="${lib}/ccn.jar" />
+	<property name="junit-jar" location="${lib}/junit-4.3.1.jar" />
+	<property name="xml-jar" location="${lib}/kxml2-2.3.0.jar" />
+	<property name="bcprov-jar" value="${lib}/bcprov-jdk16-143.jar" />
+
+	<path id="classpath">
+		<pathelement location="${bcprov-jar}" />
+		<pathelement location="${xml-jar}" />
+		<pathelement location="${junit-jar}" />
+		<pathelement location="${ccnxjar}" />
+	</path>
+
+	<path id="classpath-run">
+		<path refid="classpath" />
+		<pathelement location="${jarfile}" />
+	</path>
+
+	<target name="dumpclasspath">
+		<pathconvert pathsep=":" property="classpatharg" refid="classpath-run" />
+		<echo message="${classpatharg}" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${build}" />
+		<depend srcdir="src" destdir="${build}" closure="yes" />
+		<javac destdir="${build}" srcdir="src" debug="on">
+			<classpath>
+				<path refid="classpath" />
+			</classpath>
+		</javac>
+		<copy todir="${build}">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar compress="true" jarfile="${jarfile}" basedir="${build}">
+			<exclude name="**/.classpath" />
+			<exclude name="**/.project" />
+			<exclude name="${jarfile}" />
+		</jar>
+	</target>
+
+	<target name="test" depends="jar">
+		<echo message="No tests defined for ccnServices" />
+	</target>
+
+	<target name="clean">
+		<delete dir="${build}" />
+	</target>
+
+	<!-- ant run-ccnservices -DCCNX_PREFIX=ccnx:/ -DFILE_PREFIX=<service jars repository path> -DLOGGING= - -loggingoff -->
+	<!-- To run using ant, use command like:
+	             ant -DCCNX_PREFIX=ccnx:/ccnprefix -DFILE_PREFIX= run-ccnservices -->
+	<target name="run-ccnservices" depends="jar">
+		<!-- Not a unit test, this is to run the utility -->
+		<java classname="edu.columbia.irt.ccn.services.CCNServiceProxy" fork="true">
+			<classpath>
+				<path refid="classpath-run" />
+			</classpath>
+			<arg value="${FILE_PREFIX}" />
+			<arg value="${CCNX_PREFIX}" />
+			<arg value="--loggingon" />
+		</java>
+	</target>
+</project>
