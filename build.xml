@@ -56,7 +56,7 @@
 		<delete dir="${build}" />
 	</target>
 
-	<!-- ant run-ccnservices -DCCNX_PREFIX=ccnx:/ -DFILE_PREFIX=<service jars repository path> -DLOGGING= - -loggingoff -->
+	<!-- ant run-ccnservices -DCCNX_PREFIX=ccnx:/ -DFILE_PREFIX=/home/amanus/workspace/repo -DLOGGING= - -loggingoff -->
 	<!-- To run using ant, use command like:
 	             ant -DCCNX_PREFIX=ccnx:/ccnprefix -DFILE_PREFIX= run-ccnservices -->
 	<target name="run-ccnservices" depends="jar">

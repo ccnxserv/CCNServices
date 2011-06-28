@@ -165,8 +165,7 @@ public class CCNServiceProxy implements CCNFilterListener {
 		Method concatMethod;
 		Object result;
 		try {
-			concatMethod = serviceClass.getMethod("run",
-					parameterTypes);
+			concatMethod = serviceClass.getMethod("run", parameterTypes);
 			Object instance = null;
 			try {
 				instance = serviceClass.newInstance();
@@ -234,6 +233,8 @@ public class CCNServiceProxy implements CCNFilterListener {
 		for (int i = 1; i < tokens.length; i++) {
 			try {
 				dl = new DynamicLoader(_filePrefix, tokens[i]);
+				// Testing for NetServ Integration
+				new DynamicLoader(_filePrefix, tokens[i], "10.0.1.11");
 			} catch (IOException e) {
 				Log.warning("Error loading service {0}.jar.. {1}", tokens[i],
 						e.getMessage());
