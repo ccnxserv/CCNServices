@@ -10,7 +10,9 @@ public class weather {
 	public static final String SERVICE_NAME = "weather";
 
 	public String run(String filePrefix, String file) {
-		
+		String outFilePath = filePrefix + "/" + file + "%2B" + SERVICE_NAME;
+		String outFile = file + "%2B" + SERVICE_NAME;
+		log.info(SERVICE_NAME + ".. outFilePath = " + outFilePath);
 		Map<String, String> env = System.getenv();
 		String path = env.get("VIDEODIR");
 
@@ -55,13 +57,12 @@ public class weather {
 
 				"</par>" + "</body>\n" + "</smil>";
 
-		String outFilePath = filePrefix + "/" + file + "%2B" + SERVICE_NAME;
-		String outFile = file + "%2B" + SERVICE_NAME;
 		try {
-			BufferedWriter out = new BufferedWriter(new FileWriter(outFile));
+			BufferedWriter out = new BufferedWriter(new FileWriter(outFilePath));
 			out.write(weatherSmil);
 			out.flush();
 			out.close();
+			log.info("Wrote file to disk .. " + outFilePath);
 		} catch (IOException e) {
 			log.warning("Cannot write to output file for service.." + SERVICE_NAME);
 			return null;

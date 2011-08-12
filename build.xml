@@ -9,12 +9,15 @@
 	<property name="junit-jar" location="${lib}/junit-4.3.1.jar" />
 	<property name="xml-jar" location="${lib}/kxml2-2.3.0.jar" />
 	<property name="bcprov-jar" value="${lib}/bcprov-jdk16-143.jar" />
+	<property name="repo" location="build" />
 
 	<path id="classpath">
 		<pathelement location="${bcprov-jar}" />
 		<pathelement location="${xml-jar}" />
 		<pathelement location="${junit-jar}" />
 		<pathelement location="${ccnxjar}" />
+		 <pathelement location="/repository/org.eclipse.osgi.jar" />
+        <pathelement location="/repository/netserv-service-core-0.0.1.jar" />
 	</path>
 
 	<path id="classpath-run">
@@ -56,7 +59,7 @@
 		<delete dir="${build}" />
 	</target>
 
-	<!-- ant run-ccnservices -DCCNX_PREFIX=ccnx:/ -DFILE_PREFIX=/home/amanus/workspace/repo -DLOGGING= - -loggingoff -->
+	<!-- ant run-ccnservices -DCCNX_PREFIX=ccnx:/ -DFILE_PREFIX=/repository -DLOGGING= - -loggingoff -->
 	<!-- To run using ant, use command like:
 	             ant -DCCNX_PREFIX=ccnx:/ccnprefix -DFILE_PREFIX= run-ccnservices -->
 	<target name="run-ccnservices" depends="jar">
