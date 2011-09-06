@@ -255,6 +255,10 @@ public class CCNServiceProxy implements CCNFilterListener {
         HashMap<String, String> param = new HashMap<String, String>();
         // assuming all the service jars are present in the repository
         for (int i = 1; i < tokens.length; i++) {
+            // removing ccnx specific meta headers
+            if (tokens[i].indexOf("/") > 0) {
+                tokens[i] = tokens[i].substring(0, tokens[i].indexOf("/"));
+            }
             outFile = file + "%2B" + tokens[i];
             File out = new File(outFile);
             if (!out.exists()) {
