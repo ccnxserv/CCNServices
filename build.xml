@@ -9,21 +9,21 @@
 	<property name="junit-jar" location="${lib}/junit-4.3.1.jar" />
 	<property name="xml-jar" location="${lib}/kxml2-2.3.0.jar" />
 	<property name="bcprov-jar" value="${lib}/bcprov-jdk16-143.jar" />
-	<property name="dist" location="/node-repo" />
     <property name="jarfile" value="ccnServices.jar" />
+    <property name="repo" value="/node-repo" />
 
 	<path id="classpath">
 		<pathelement location="${bcprov-jar}" />
 		<pathelement location="${xml-jar}" />
 		<pathelement location="${junit-jar}" />
 		<pathelement location="${ccnxjar}" />
-		 <pathelement location="/node-repo/org.eclipse.osgi.jar" />
-        <pathelement location="/node-repo/netserv-service-core-0.0.1.jar" />
+		<pathelement location="${repo}/org.eclipse.osgi.jar" />
+        <pathelement location="${repo}/netserv-service-core-0.0.1.jar" />
 	</path>
 
 	<path id="classpath-run">
 		<path refid="classpath" />
-		<pathelement location="${jarfile}" />
+		<pathelement location="${repo}/${jarfile}" />
 	</path>
 
 	<target name="compile">
@@ -40,14 +40,14 @@
 	</target>
 
 	<target name="dist" depends="compile">
-	    <jar jarfile="${dist}/${jarfile}" basedir="${build}" compress="true" />
+	    <jar jarfile="${repo}/${jarfile}" basedir="${build}" compress="true" />
 	</target>
 
 	<target name="clean">
 		<delete dir="${build}" />
 	</target>
 
-	<!-- ant run-ccnservices -DCCNX_PREFIX=ccnx:/ -DFILE_PREFIX=/repository -->
+	<!-- ant run-ccnservices -DCCNX_PREFIX=ccnx:/ -DFILE_PREFIX=/node-repo -->
 	<target name="run-ccnservices" depends="dist">
 		<!-- Not a unit test, this is to run the utility -->
 		<java classname="edu.columbia.irt.ccn.services.CCNServiceProxy" fork="true">

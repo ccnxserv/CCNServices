@@ -1,0 +1,71 @@
+Enabling Services on top of CCNx Protocol.
+
+BUILDING and INSTALLING
+
+1. Download the latest CCNx code from :-
+    
+    http://www.ccnx.org/software-download-information-request/download-releases/
+    
+    Latest source should work fine, we tested out design on 0.4.0 release.
+2. Build and install CCN. Include ccn/bin into your environment PATH.
+3. Create a folder which will act as your local repository eg. /home/columbia/repo
+4. Create a symbolic link, /node-repo for the above created folder - 
+            $ sudo ln -s /home/columbia/repo  /node-repo
+   [You may have to do "sudo su" then create sym-link] 
+3. Clone two projects from github in your workspace:-
+    https://github.com/amanus/CCNServices
+    https://github.com/amanus/NetServServiceCore
+
+4. Copy all the jar files from lib folder to /node-repo folder for both the
+   above projects.
+5. Build both the project, both projects use ant build scripts and create jar files
+   in the /node-repo folder.
+   ~CCNServices $ ant
+   ~NetServServiceCore $ ant
+
+RUNNING THE DEMO 
+         
+6. With ccn deamon in you PATH, you should be able to give ccnd command.
+    $ ccnd
+   This will start ccn deamon, with log level=verbose.         
+
+7. Now we can run ccnservice in another terminal. Issue following command with 
+   your directory being CCNServices project.
+   
+   ~CCNServices $ ant run-ccnservices -DCCNX_PREFIX=ccnx:/ -DFILE_PREFIX=/node-repo 
+   
+   This should start listening to ccnx content requests with ccnx:// namespace, 
+   effectively all the requests. You can change this to suit your needs. Eg.
+   ccnx://columbia/irt  etc. 
+
+8. In a new directory, kind of scratchpad, you can issue ccnx get commands to fetch
+   content.
+   
+   ~scratchpad$ ccngetfile ccnx://test.txt temp.txt
+   
+   Note: test.txt is a file that is already present in the repository, this 
+   command will only return the file if it is present.
+   
+   For executing services.
+   
+   ~scratchpad$ ccngetfile ccnx://test.txt+service temp.txt
+   
+   This command executes "service" on test.txt content and returns result in 
+   temp.txt, You can do more exotic stuff as
+   
+   ~scratchpad$ ccngetfile ccnx://test.txt+service1+service2 temp.txt
+   
+   This command will execute services in a chain. 
+   
+   
+FOR CREATING NEW SERVICES
+
+1. You need to create OSGi bundles the usual way. When creating a CCNService,
+   you need to implement CCNService interface present in the NetServServiceCore
+   jar file.
+   
+   When creating service jar you need to add "CCN-Service" manifest attribute
+   with the value as the above class's path, this step is important as it framework
+   tells which class acts as a CCNService at runtime.
+   
+     
