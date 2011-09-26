@@ -256,8 +256,10 @@ public class CCNServiceProxy implements CCNFilterListener {
         // assuming all the service jars are present in the repository
         for (int i = 1; i < tokens.length; i++) {
             // removing ccnx specific meta headers
-            if (tokens[i].indexOf("/") > 0) {
-                tokens[i] = tokens[i].substring(0, tokens[i].indexOf("/"));
+            if (tokens[i].indexOf("/") > 1) {
+                tokens[i] = tokens[i].substring(0, tokens[i].indexOf("/", 1));
+                Log.info("Found Meta header in CCN Interest, changed token {0}",
+                        tokens[i]);
             }
             outFile = file + "%2B" + tokens[i];
             File out = new File(outFile);
@@ -290,6 +292,8 @@ public class CCNServiceProxy implements CCNFilterListener {
                     break;
                 }
             } else {
+                Log.info("File already present in the repository - {0}", outFile);
+                file = outFile;
                 continue;
             }
         }

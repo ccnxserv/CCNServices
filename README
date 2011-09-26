@@ -68,4 +68,7 @@ FOR CREATING NEW SERVICES
    with the value as the above class's path, this step is important as it framework
    tells which class acts as a CCNService at runtime.
    
+   Note: Compiling requires eclipse-osgi & netservservicecore jar in the classpath,
+   make sure the jar file has the same name as the project, lowercases, this keeps
+   things simple when issuing commands on ccnx.
      
