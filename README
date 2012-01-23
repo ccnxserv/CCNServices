@@ -89,10 +89,10 @@ FOR CREATING NEW SERVICES
    jar file.
    
    When creating service jar you need to add "CCN-Service" manifest attribute
-   with the value as the above class's path, this step is important as it framework
-   tells which class acts as a CCNService at runtime.
+   with the value as the above class's path, this step is important as it
+   tells the framework which class acts as a CCNService at runtime.
    
    Note: Compiling requires eclipse-osgi & netservservicecore jar in the classpath,
    make sure the jar file has the same name as the project, lowercases, this keeps
-   things simple when issuing commands on ccnx.
+   things simple when issuing commands on ccnx. 
      
