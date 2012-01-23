@@ -6,15 +6,15 @@ BUILDING and INSTALLING
     
     http://www.ccnx.org/software-download-information-request/download-releases/
     
-    Latest source should work fine, we tested out design on 0.4.0 release.
+    Latest source should work fine, we tested our design on 0.4.0 release.
 2. Build and install CCN. Include ccn/bin into your environment PATH.
 3. Create a folder which will act as your local repository eg. /home/columbia/repo
 4. Create a symbolic link, /node-repo for the above created folder - 
             $ sudo ln -s /home/columbia/repo  /node-repo
    [You may have to do "sudo su" then create sym-link] 
 3. Clone two projects from github in your workspace:-
-    https://github.com/amanus/CCNServices
-    https://github.com/amanus/NetServServiceCore
+    https://github.com/ccnxserv/CCNServices
+    https://github.com/ccnxserv/NetServServiceCore
 
 4. Copy all the jar files from lib folder to /node-repo folder for both the
    above projects.
@@ -22,7 +22,8 @@ BUILDING and INSTALLING
    in the /node-repo folder.
    ~CCNServices $ ant
    ~NetServServiceCore $ ant
-
+    [This creates ccnservices.jar and netserv-service-core.jar files in /node-repo]
+    
 RUNNING THE DEMO 
          
 6. With ccn deamon in you PATH, you should be able to give ccnd command.
@@ -56,7 +57,30 @@ RUNNING THE DEMO
    ~scratchpad$ ccngetfile ccnx://test.txt+service1+service2 temp.txt
    
    This command will execute services in a chain. 
+
+EXAMPLE SERVICES 
+
+   clone  https://github.com/ccnxserv/CCNServiceExamples repository
+   This repository has two examples services, linenumber & nextservice.
    
+   1. linenumber.jar : appends a linenumber for each line in a text file 
+   
+   build linenumber.jar using ant
+   $CCNServiceExamples/Linenumber/: ant
+   [creates linenumber.jar in /node-repo]
+   
+   You can apply this service on an exiting text file in the repository. 
+   [simply copy paste any text file into /node-repo]
+   ~scratchpad$ ccngetfile ccnx://text.txt+linenumber text.txt
+   
+   2. nextservice.jar : appends a line "ADDED BY NEXT SERVICE" in the end of a text file.
+   build nextservice.jar using ant
+   ~CCNServiceExamples/NextService$ ant
+   [creates nextservice.jar in /node-repo]
+    ~scratchpad$ ccngetfile ccnx://text.txt+nextservice text2.txt
+    Chaining
+    ~scratchpad$ ccngetfile ccnx://text.txt+linenumber+nextservice text3.txt
+  
    
 FOR CREATING NEW SERVICES
 
