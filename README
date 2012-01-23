@@ -63,7 +63,7 @@ EXAMPLE SERVICES
    clone  https://github.com/ccnxserv/CCNServiceExamples repository
    This repository has two examples services, linenumber & nextservice.
    
-   1. linenumber.jar : appends a linenumber for each line in a text file 
+   a. linenumber.jar : appends a linenumber for each line in a text file 
    
    build linenumber.jar using ant
    $CCNServiceExamples/Linenumber/: ant
@@ -73,7 +73,7 @@ EXAMPLE SERVICES
    [simply copy paste any text file into /node-repo]
    ~scratchpad$ ccngetfile ccnx://text.txt+linenumber text.txt
    
-   2. nextservice.jar : appends a line "ADDED BY NEXT SERVICE" in the end of a text file.
+   b. nextservice.jar : appends a line "ADDED BY NEXT SERVICE" in the end of a text file.
    build nextservice.jar using ant
    ~CCNServiceExamples/NextService$ ant
    [creates nextservice.jar in /node-repo]
@@ -84,7 +84,7 @@ EXAMPLE SERVICES
    
 FOR CREATING NEW SERVICES
 
-1. You need to create OSGi bundles the usual way. When creating a CCNService,
+9. You need to create OSGi bundles the usual way. When creating a CCNService,
    you need to implement CCNService interface present in the NetServServiceCore
    jar file.
    
